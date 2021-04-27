@@ -60,14 +60,6 @@ const cardArray = [
   '0C',
 ];
 
-// const min = 0
-// const cardCount = 52
-
-// let rndNum = 0
-// let temp = ""
-// let arrayLength = 0;
-let rndCarteTemp = '';
-let rndNumTemp = 0;
 class Table extends React.Component {
   constructor() {
     super();
@@ -85,9 +77,9 @@ class Table extends React.Component {
   }
 
   rndCarte() {
-    // arrayLength = +this.state.playerCardList.length;
+    let rndCarteTemp = '';
 
-    rndNumTemp = Math.floor(Math.random() * 53);
+    let rndNumTemp = Math.floor(Math.random() * 53);
 
     if (rndNumTemp > 52) {
       rndNumTemp = rndNumTemp - 10;
@@ -101,9 +93,11 @@ class Table extends React.Component {
   }
 
   onClickStop = () => {
+    //  Tirage random des deux premières cartes du dealer
     const cardSelectedDealer = this.rndCarte();
     const cardSelectedDealer2 = this.rndCarte();
 
+    //  Conserve le premier caractère de la random carte du dealer (ex: KC donne K ) et lui donne la valeur de type number 10 si le premier caractère = K,Q,J et 0 sinon parseInt la valeur de la carte
     const valueCarteDealer = this.transformCardIntoInt(
       cardSelectedDealer.split('')[0]
     );
@@ -111,8 +105,10 @@ class Table extends React.Component {
       cardSelectedDealer2.split('')[0]
     );
 
+    // Les deux cartes du dealer sous forme d'array de string
     const cardsDealer = [cardSelectedDealer, cardSelectedDealer2];
 
+    // Valeur de la main du dealer
     let dealerValue = valueCarteDealer + valueCarteDealer2;
 
     let endGameAndWinner = {
