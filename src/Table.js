@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from './components/button/Button.jsx';
-import Cartes from './components/carte/Cartes';
-import Game from './views/Game.jsx';
+import Cartes from './views/carte/Cartes';
+import StartGame from './views/startGame/StartGame.jsx';
 
 const cardArray = [
   'KS',
@@ -76,6 +76,7 @@ class Table extends React.Component {
     };
   }
 
+  // Tirage random cartes
   rndCarte() {
     let rndCarteTemp = '';
 
@@ -111,11 +112,13 @@ class Table extends React.Component {
     // Valeur de la main du dealer
     let dealerValue = valueCarteDealer + valueCarteDealer2;
 
+    // Déclaration de la variable utilisé dans le while
     let endGameAndWinner = {
       endGame: false,
       nameOfWinner: '',
     };
 
+    // While qui détermine le vainqueur et met à jour la variable endGameAndWinner
     while (dealerValue < 17) {
       const cardSelectedDealer = this.rndCarte();
       const valueCarteDealer = this.transformCardIntoInt(
@@ -154,8 +157,6 @@ class Table extends React.Component {
       }
     }
 
-    console.log('update state on stop');
-
     this.setState({
       counterDealer: dealerValue,
       dealerCardList: cardsDealer,
@@ -164,6 +165,7 @@ class Table extends React.Component {
     });
   };
 
+  // Distribue une carte et met à jour la main du joueur et la valeur de sa main
   onClickGive = () => {
     const cardSelected = this.rndCarte();
     const valueCarte = this.transformCardIntoInt(cardSelected.split('')[0]);
@@ -175,6 +177,7 @@ class Table extends React.Component {
     });
   };
 
+  // Calcul la valeur de la main et la transforme en value de type number
   transformCardIntoInt(cardValue) {
     if (
       cardValue === 'K' ||
@@ -189,6 +192,7 @@ class Table extends React.Component {
     return parseInt(cardValue);
   }
 
+  // Distribution des deux premiètes cartes au joueur dès le début du jeu et maj du state correspondant
   startGame = () => {
     const cardSelected = this.rndCarte();
     const cardSelected2 = this.rndCarte();
@@ -209,7 +213,7 @@ class Table extends React.Component {
 
   render() {
     if (this.state.startGame == false) {
-      return <Game startGame={this.startGame} />;
+      return <StartGame startGame={this.startGame} />;
     } else {
       return (
         <div>
